@@ -35,7 +35,7 @@ public:
     int getDistancia()                   { return this->distancia; }
 
     void setPai(Vertice *pai) { this->pai = pai; }
-
+    Vertice* getPai (){return this->pai;}
     void setCor(QColor cor)  { this->cor = cor; }
     void setTempoEntrada( int  tempoEntrada ) { this->tempoEntrada = tempoEntrada; }
     void setTempoSaida( int  tempoSaida ) { this->tempoSaida = tempoSaida; }

@@ -152,6 +152,21 @@ void MainWindow::mostrarLista(QList<Vertice *> lista){
     this->ui->caminho->append(str);
 }
 
+void MainWindow::getPath(QString metodo){
+    Vertice * ver = this->grafo->getVertice()[ui->cbFinal->currentIndex()];
+    QString msg = "";
+    int cont = 0;
+    while (ver->getPai() != NULL){
+        msg = ver->getNome() + msg;
+        msg = " -> " + msg;
+        ver = ver->getPai();
+        cont++;
+    }
+    msg = this->grafo->getVertice()[ui->cbOrigem->currentIndex()]->getNome() + msg;
+    qDebug() << msg;
+    this->ui->caminho->setText(metodo + "\n" + msg);
+}
+
 void MainWindow::on_start_clicked(){
     switch ( this->ui->cdMetodo->currentIndex()) {
         case 0:
@@ -197,6 +212,7 @@ void MainWindow::on_MostrarCaminhoButton_clicked()
     switch ( this->ui->cdMetodo->currentIndex()) {
         case 0:
             qDebug() << "DFS";
+            this->getPath("DFS");
             break;
         case 1:
             qDebug() << "BFS";

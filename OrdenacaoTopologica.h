@@ -21,6 +21,7 @@ class OrdenacaoTopologica : public QThread
         }
 
         QList <Vertice *> getList (){return lista;}
+        Grafo * getGrafo (){return grafo;}
     private:
         int tempo;
         int VerticeInitial;

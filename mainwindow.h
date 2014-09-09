@@ -26,6 +26,7 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
     void mostrarLista(QList <Vertice *>);
+    void getPath(QString);
 
 public slots:
     void mostrarGrafo ( Grafo * );
