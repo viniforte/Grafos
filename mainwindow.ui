@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>613</width>
+    <width>685</width>
     <height>421</height>
    </rect>
   </property>
@@ -17,8 +17,8 @@
    <widget class="QComboBox" name="cbOrigem">
     <property name="geometry">
      <rect>
-      <x>160</x>
-      <y>20</y>
+      <x>470</x>
+      <y>50</y>
       <width>191</width>
       <height>22</height>
      </rect>
@@ -27,8 +27,8 @@
    <widget class="QLabel" name="labelInicial">
     <property name="geometry">
      <rect>
-      <x>50</x>
-      <y>20</y>
+      <x>360</x>
+      <y>50</y>
       <width>101</width>
       <height>16</height>
      </rect>
@@ -70,7 +70,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="MostrarCaminhoButton">
     <property name="geometry">
      <rect>
       <x>160</x>
@@ -83,14 +83,77 @@
      <string>Mostrar Caminho</string>
     </property>
    </widget>
+   <widget class="QComboBox" name="cdMetodo">
+    <property name="geometry">
+     <rect>
+      <x>220</x>
+      <y>0</y>
+      <width>191</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <item>
+     <property name="text">
+      <string>DFS</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>BFS</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Ordenação Topologica</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Dijkstra</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Prim</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Kruskal</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Ford-Fulkerson</string>
+     </property>
+    </item>
+   </widget>
+   <widget class="QLabel" name="labelInicial_2">
+    <property name="geometry">
+     <rect>
+      <x>150</x>
+      <y>0</y>
+      <width>71</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Metodo:</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
+<<<<<<< HEAD
      <width>613</width>
      <height>21</height>
+=======
+     <width>685</width>
+     <height>25</height>
+>>>>>>> origin/master
     </rect>
    </property>
    <widget class="QMenu" name="menuGrafos">

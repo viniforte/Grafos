@@ -18,7 +18,7 @@ MainWindow::MainWindow(QWidget *parent) :
     this->ui->statusBar->addWidget( this->ui->labelFinal  );
     this->ui->statusBar->addWidget( this->ui->cbFinal );
     this->ui->statusBar->addWidget( this->ui->textEdit );
-    this->ui->statusBar->addWidget( this->ui->pushButton );
+    this->ui->statusBar->addWidget( this->ui->MostrarCaminhoButton );
 
     QMainWindow::paintEvent(new QPaintEvent(this->geometry()));
     this->grafo=this->tmp=NULL;
@@ -85,7 +85,7 @@ void MainWindow::on_actionLoad_triggered() {
         QStringList sl;
 
         if (grafo!=NULL) delete grafo;
-        line = in.readLine();     // número de vértices
+        line = in.readLine();     // nï¿½mero de vï¿½rtices
         grafo = new Grafo ( line.toInt(), this );
 
         ui->cbOrigem->clear();
@@ -94,14 +94,14 @@ void MainWindow::on_actionLoad_triggered() {
         while(!in.atEnd() && loadvertice) {
             line = in.readLine();
             if (line.length()>0 && line.at(0)!='(') {
-                //line = 1,100,100 ==> nome vértice, coordenada x, coordenada y
+                //line = 1,100,100 ==> nome vï¿½rtice, coordenada x, coordenada y
                 sl = line.split(",");
                 if (sl.count()==3) {
                     grafo->add( sl[0], sl[1].toInt(), sl[2].toInt() );
                     ui->cbOrigem->addItem( sl[0] );
                     ui->cbFinal->addItem( sl[0] );
                 } else {
-                    QMessageBox::critical(this,"Carregar vértices", "Erro na estrutura do arquivo - nós [node, coord. x, coord. y]!");
+                    QMessageBox::critical(this,"Carregar vï¿½rtices", "Erro na estrutura do arquivo - nï¿½s [node, coord. x, coord. y]!");
                     return;
                 }
             } else
@@ -119,7 +119,7 @@ void MainWindow::on_actionLoad_triggered() {
                 if (sl.count()==3)
                     grafo->addAresta(sl[0], sl[1], sl[2].toInt() );
                 else {
-                    QMessageBox::critical(this,"Carregar arestas", "Erro na estrutura do arquivo - nós [node, coord. x, coord. y]!");
+                    QMessageBox::critical(this,"Carregar arestas", "Erro na estrutura do arquivo - nï¿½s [node, coord. x, coord. y]!");
                     return;
                 }
 
@@ -138,4 +138,39 @@ MainWindow::~MainWindow() {
     if (grafo!=NULL)
         delete grafo;
     delete ui;
+}
+
+void MainWindow::on_MostrarCaminhoButton_clicked()
+{
+    switch ( this->ui->cdMetodo->currentIndex()) {
+        case 0:
+            qDebug() << "DFS";
+            this->grafo->dfs();
+            connect(grafo, SIGNAL(sinal), this, SLOT(slot));
+            break;
+        case 1:
+            qDebug() << "BFS";
+            break;
+        case 2:
+            qDebug() << "Ordenação Topologica";
+            break;
+        case 3:
+            qDebug() << "Dijkstra";
+            break;
+        case 4:
+            qDebug() << "Prim";
+            break;
+        case 5:
+            qDebug() << "Kruskal";
+            break;
+        case 6:
+            qDebug() << "Ford-Fulkerson";
+            break;
+        default:
+            break;
+    }
+}
+
+void MainWindow::slot() {
+    //paintEvent();
 }

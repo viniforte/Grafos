@@ -13,6 +13,9 @@
 class Grafo : public QObject {
     Q_OBJECT
 
+signals:
+    void sinal();
+
 public:
     Grafo ( int n, QObject *parent ) : QObject(parent)  {
         aresta      = NULL;
@@ -64,6 +67,7 @@ public:
             this->vertice[i]->setTempoEntrada(INFINITO);
             this->vertice[i]->setTempoSaida(INFINITO);
             this->vertice[i]->setCor(Qt::white);
+            emit sinal();
         }
 
         //MOSTRAR
@@ -129,10 +133,11 @@ public:
         //MOSTRAR
     }*/
 
-    /*void bfs(){
-        Lista lista = new Lista();
+   /*void bfs(){
+        //Lista lista = new Lista();
+        QVector<Vertice> lista = new QVector();
         Vertice *verticeAtual;
-        Aresta *arestta;
+        Aresta *aresta;
         int i;
         for ( i = 1; i <size; i++ ) {
             vertice[i]->setParent(NULL);
@@ -142,9 +147,12 @@ public:
         vertice[0]->setParent(NULL);
         vertice[0]->setDistancia(0);
         vertice[0]->setCor(Qt::gray);
-        lista->appendVertice(vertice[0]);
-        while (!lista->isEmpty() ) {
-            vertice->lista->removeInicio();
+        //lista->appendVertice(vertice[0]);
+        lista.append(vertice[0]);
+        //while (!lista->isEmpty() ) {
+        while (!lista.empty()) {
+            //vertice->lista->removeInicio();
+            lista.removeFirst();
             for ( aresta = vertice[i]->getAresta(); aresta != NULL; aresta = aresta->getNext() ) {
                 verticeAtual = aresta->getIdV2();
                 if ( verticeAtual->getCor() == Qt::white ) {
@@ -156,7 +164,7 @@ public:
             }
             vertice[i]->setCor(Qt::black);
         }
-        //delete lista;
+        delete lista;
     }*/
 
     /*void Dijkstra ( int Vi ) {
@@ -215,6 +223,22 @@ public:
         delete lista;
     }*/
 
+    /*void Kruskal ( Aresta *h ) {
+        Aresta *aresta = h;
+        vKruscal = new Vertice *[n_vertice];
+        for ( int i = 0; i < n_vertice; i++ ) {
+            vKruscal[i]= new Vertice(i, vertice[i]->getNome(), vertice[i]->getX(), vertice[i]->getY());
+        }
+        int n_a = 0;
+        while( (n_a < n_vertice) && ( aresta != NULL )) {
+            v1 = vKruscal[aresta->getIdV1()];
+            v2 = vKruscal[aresta->getIdV2()];
+            if ( !find(v1,v2)){
+                v1
+            }
+        }
+    }*/
+
 
 protected:
     Vertice **vertice;
@@ -222,6 +246,7 @@ protected:
     int max;
     int size;
     int tempo;
+    Vertice **vKruscal;
 
     int getVerticeIndex ( QString nome ) {
         for (int i=0; i<size; i++)
