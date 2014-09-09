@@ -68,9 +68,8 @@ public:
             this->vertice[i]->setTempoSaida(INFINITO);
             this->vertice[i]->setCor(Qt::white);
             emit sinal();
+            qDebug() << "haha";
         }
-
-        //MOSTRAR
 
         this->tempo = 0;
         for ( int i = 0; i < n; i++ ){
@@ -81,7 +80,10 @@ public:
     }
 
     void Visit ( Vertice *vertice ) {
-        vertice->setCor(Qt::yellow);
+        vertice->setCor(Qt::green);
+        qDebug() << "visita vertice "; qDebug() << vertice->getNome();
+        qDebug() << "Pinta vermelho";
+        emit sinal();
         Vertice *VA;
         vertice->setTempoEntrada(this->tempo++);
         Aresta *aresta = vertice->getAresta();
@@ -94,6 +96,9 @@ public:
         }
         vertice->setTempoSaida(this->tempo++);
         vertice->setCor(Qt::red);
+        qDebug() << "visita vertice "; qDebug() << vertice->getNome();
+        qDebug() << "Pinta Vermelho";
+        emit sinal();
     }
 
     //TOPOLOGICA

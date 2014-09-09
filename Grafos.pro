@@ -19,7 +19,8 @@ HEADERS += \
     grafo.h \
     vertice.h \
     mainwindow.h \
-    Aresta.h
+    Aresta.h \
+    Dfs.h
 
 FORMS += \
     mainwindow.ui

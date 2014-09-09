@@ -86,7 +86,7 @@
    <widget class="QComboBox" name="cdMetodo">
     <property name="geometry">
      <rect>
-      <x>220</x>
+      <x>80</x>
       <y>0</y>
       <width>191</width>
       <height>22</height>
@@ -131,7 +131,7 @@
    <widget class="QLabel" name="labelInicial_2">
     <property name="geometry">
      <rect>
-      <x>150</x>
+      <x>20</x>
       <y>0</y>
       <width>71</width>
       <height>16</height>

@@ -61,7 +61,7 @@ void MainWindow::paintEvent(QPaintEvent *) {
 
 void MainWindow::mostrarGrafo ( Grafo *g ) {
     this->tmp=g;
-    update ();
+    update();
 }
 
 void MainWindow::on_actionLoad_triggered() {
@@ -145,8 +145,10 @@ void MainWindow::on_MostrarCaminhoButton_clicked()
     switch ( this->ui->cdMetodo->currentIndex()) {
         case 0:
             qDebug() << "DFS";
-            this->grafo->dfs();
-            connect(grafo, SIGNAL(sinal), this, SLOT(slot));
+            dfs = new Dfs();
+            dfs->setParameters(grafo, ui->cbOrigem->currentIndex(), ui->cbFinal->currentIndex());
+            dfs->start();
+            connect(dfs, SIGNAL(sinal()), SLOT(slot()));
             break;
         case 1:
             qDebug() << "BFS";
@@ -172,5 +174,6 @@ void MainWindow::on_MostrarCaminhoButton_clicked()
 }
 
 void MainWindow::slot() {
-    //paintEvent();
+    update();
+    QThread::sleep(1);
 }

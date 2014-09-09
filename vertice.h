@@ -34,6 +34,8 @@ public:
     QColor  getCor ()                    { return this->cor;  }
     int getDistancia()                   { return this->distancia; }
 
+    void setPai(Vertice *pai) { this->pai = pai; }
+
     void setCor(QColor cor)  { this->cor = cor; }
     void setTempoEntrada( int  tempoEntrada ) { this->tempoEntrada = tempoEntrada; }
     void setTempoSaida( int  tempoSaida ) { this->tempoSaida = tempoSaida; }
@@ -54,6 +56,7 @@ protected:
     int n_a; // número de arestas
     QColor cor; // cor do vértice
     Aresta *aresta;
+    Vertice *pai;
 
     int x;
     int y;

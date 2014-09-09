@@ -4,9 +4,11 @@
 #include <QMainWindow>
 
 #include "grafo.h"
+#include "Dfs.h"
 
 #include <QPainter>
 #include <QPaintEvent>
+#include <QThread>
 
 namespace Ui {
 class MainWindow;
@@ -34,6 +36,7 @@ private slots:
 private:
     Ui::MainWindow *ui;
     Grafo *grafo, *tmp;
+    Dfs *dfs;
 
 protected:
     virtual void paintEvent(QPaintEvent *);
