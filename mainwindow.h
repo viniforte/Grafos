@@ -7,6 +7,8 @@
 #include "Dfs.h"
 #include "Bfs.h"
 #include "OrdenacaoTopologica.h"
+#include "Prim.h"
+#include "Dijkstra.h"
 
 #include <QPainter>
 #include <QPaintEvent>
@@ -43,6 +45,8 @@ private:
     Dfs *dfs;
     Bfs *bfs;
     OrdenacaoTopologica *ord;
+    Prim *prim;
+    Dijkstra *dijkstra;
 
 protected:
     virtual void paintEvent(QPaintEvent *);

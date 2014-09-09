@@ -192,9 +192,18 @@ void MainWindow::on_start_clicked(){
             break;
         case 3:
             qDebug() << "Dijkstra";
+            dijkstra = new Dijkstra();
+            qDebug() << "aaa";
+            dijkstra->setParameters(grafo, ui->cbOrigem->currentIndex(), ui->cbFinal->currentIndex());
+            dijkstra->start();
+            connect(bfs, SIGNAL(sinal()), SLOT(slot()));
             break;
         case 4:
             qDebug() << "Prim";
+            prim = new Prim();
+            prim->setParameters(grafo, ui->cbOrigem->currentIndex(), ui->cbFinal->currentIndex());
+            prim->start();
+            connect(prim, SIGNAL(sinalPrim()), SLOT(slot()));
             break;
         case 5:
             qDebug() << "Kruskal";

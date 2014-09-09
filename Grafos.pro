@@ -22,7 +22,9 @@ HEADERS += \
     Aresta.h \
     Dfs.h \
     Bfs.h \
-    OrdenacaoTopologica.h
+    OrdenacaoTopologica.h \
+    Dijkstra.h \
+    Prim.h
 
 FORMS += \
     mainwindow.ui
