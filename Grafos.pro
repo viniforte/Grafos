@@ -21,7 +21,8 @@ HEADERS += \
     mainwindow.h \
     Aresta.h \
     Dfs.h \
-    Bfs.h
+    Bfs.h \
+    OrdenacaoTopologica.h
 
 FORMS += \
     mainwindow.ui

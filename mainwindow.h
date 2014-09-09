@@ -6,6 +6,7 @@
 #include "grafo.h"
 #include "Dfs.h"
 #include "Bfs.h"
+#include "OrdenacaoTopologica.h"
 
 #include <QPainter>
 #include <QPaintEvent>
@@ -24,6 +25,7 @@ signals:
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+    void mostrarLista(QList <Vertice *>);
 
 public slots:
     void mostrarGrafo ( Grafo * );
@@ -31,7 +33,7 @@ public slots:
 
 private slots:
     void on_actionLoad_triggered();
-
+    void on_start_clicked();
     void on_MostrarCaminhoButton_clicked();
 
 private:
@@ -39,6 +41,7 @@ private:
     Grafo *grafo, *tmp;
     Dfs *dfs;
     Bfs *bfs;
+    OrdenacaoTopologica *ord;
 
 protected:
     virtual void paintEvent(QPaintEvent *);

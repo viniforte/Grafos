@@ -15,9 +15,10 @@ MainWindow::MainWindow(QWidget *parent) :
     //this->p
     this->ui->toolBar->addWidget( this->ui->labelInicial );
     this->ui->toolBar->addWidget( this->ui->cbOrigem );
-    this->ui->statusBar->addWidget( this->ui->labelFinal  );
-    this->ui->statusBar->addWidget( this->ui->cbFinal );
-    this->ui->statusBar->addWidget( this->ui->textEdit );
+    this->ui->toolBar->addWidget( this->ui->labelFinal  );
+    this->ui->toolBar->addWidget( this->ui->cbFinal );
+    this->ui->toolBar->addWidget(this->ui->start);
+    this->ui->statusBar->addWidget( this->ui->caminho );
     this->ui->statusBar->addWidget( this->ui->MostrarCaminhoButton );
 
     QMainWindow::paintEvent(new QPaintEvent(this->geometry()));
@@ -140,8 +141,18 @@ MainWindow::~MainWindow() {
     delete ui;
 }
 
-void MainWindow::on_MostrarCaminhoButton_clicked()
-{
+void MainWindow::mostrarLista(QList<Vertice *> lista){
+    qDebug() << "mostrarLista";
+    QString str = "";
+    this->ui->caminho->append("Ordem Topologica");
+    foreach (Vertice * vertice, lista){
+        str += vertice->getNome();
+        if (!lista.endsWith(vertice)) str += " - ";
+    }
+    this->ui->caminho->append(str);
+}
+
+void MainWindow::on_start_clicked(){
     switch ( this->ui->cdMetodo->currentIndex()) {
         case 0:
             qDebug() << "DFS";
@@ -159,6 +170,40 @@ void MainWindow::on_MostrarCaminhoButton_clicked()
             break;
         case 2:
             qDebug() << "Ordenação Topologica";
+            ord = new OrdenacaoTopologica();
+            ord->setParameters(grafo, ui->cbOrigem->currentIndex(), ui->cbFinal->currentIndex());
+            ord->start();
+            connect(ord, SIGNAL(sinal()), SLOT(slot()));
+            break;
+        case 3:
+            qDebug() << "Dijkstra";
+            break;
+        case 4:
+            qDebug() << "Prim";
+            break;
+        case 5:
+            qDebug() << "Kruskal";
+            break;
+        case 6:
+            qDebug() << "Ford-Fulkerson";
+            break;
+        default:
+            break;
+    }
+}
+
+void MainWindow::on_MostrarCaminhoButton_clicked()
+{
+    switch ( this->ui->cdMetodo->currentIndex()) {
+        case 0:
+            qDebug() << "DFS";
+            break;
+        case 1:
+            qDebug() << "BFS";
+            break;
+        case 2:
+            qDebug() << "Ordenação Topologica";
+            this->mostrarLista(ord->getList());
             break;
         case 3:
             qDebug() << "Dijkstra";
