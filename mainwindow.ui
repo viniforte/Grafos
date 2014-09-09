@@ -17,7 +17,7 @@
    <widget class="QComboBox" name="cbOrigem">
     <property name="geometry">
      <rect>
-      <x>160</x>
+      <x>470</x>
       <y>50</y>
       <width>191</width>
       <height>22</height>
@@ -27,7 +27,7 @@
    <widget class="QLabel" name="labelInicial">
     <property name="geometry">
      <rect>
-      <x>50</x>
+      <x>360</x>
       <y>50</y>
       <width>101</width>
       <height>16</height>
@@ -70,7 +70,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="MostrarCaminhoButton">
     <property name="geometry">
      <rect>
       <x>160</x>
@@ -83,95 +83,62 @@
      <string>Mostrar Caminho</string>
     </property>
    </widget>
-   <widget class="QRadioButton" name="radioButton">
+   <widget class="QComboBox" name="cdMetodo">
     <property name="geometry">
      <rect>
-      <x>10</x>
+      <x>220</x>
       <y>0</y>
-      <width>61</width>
+      <width>191</width>
       <height>22</height>
      </rect>
     </property>
-    <property name="text">
-     <string>DFS</string>
-    </property>
+    <item>
+     <property name="text">
+      <string>DFS</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>BFS</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Ordenação Topologica</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Dijkstra</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Prim</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Kruskal</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Ford-Fulkerson</string>
+     </property>
+    </item>
    </widget>
-   <widget class="QRadioButton" name="radioButton_2">
+   <widget class="QLabel" name="labelInicial_2">
     <property name="geometry">
      <rect>
-      <x>70</x>
+      <x>150</x>
       <y>0</y>
-      <width>61</width>
-      <height>22</height>
+      <width>71</width>
+      <height>16</height>
      </rect>
     </property>
     <property name="text">
-     <string>BFS</string>
-    </property>
-   </widget>
-   <widget class="QRadioButton" name="radioButton_3">
-    <property name="geometry">
-     <rect>
-      <x>130</x>
-      <y>0</y>
-      <width>181</width>
-      <height>22</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Ordenação Topologica</string>
-    </property>
-   </widget>
-   <widget class="QRadioButton" name="radioButton_4">
-    <property name="geometry">
-     <rect>
-      <x>310</x>
-      <y>0</y>
-      <width>61</width>
-      <height>22</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Prim</string>
-    </property>
-   </widget>
-   <widget class="QRadioButton" name="radioButton_5">
-    <property name="geometry">
-     <rect>
-      <x>370</x>
-      <y>0</y>
-      <width>81</width>
-      <height>22</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Kruskal</string>
-    </property>
-   </widget>
-   <widget class="QRadioButton" name="radioButton_6">
-    <property name="geometry">
-     <rect>
-      <x>450</x>
-      <y>0</y>
-      <width>81</width>
-      <height>22</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Dijkstra</string>
-    </property>
-   </widget>
-   <widget class="QRadioButton" name="radioButton_7">
-    <property name="geometry">
-     <rect>
-      <x>530</x>
-      <y>0</y>
-      <width>121</width>
-      <height>22</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Ford-Fulkerson</string>
+     <string>Metodo:</string>
     </property>
    </widget>
   </widget>

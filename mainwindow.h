@@ -24,9 +24,12 @@ public:
 
 public slots:
     void mostrarGrafo ( Grafo * );
+    void slot();
 
 private slots:
     void on_actionLoad_triggered();
+
+    void on_MostrarCaminhoButton_clicked();
 
 private:
     Ui::MainWindow *ui;
