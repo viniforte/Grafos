@@ -5,6 +5,7 @@
 
 #include "grafo.h"
 #include "Dfs.h"
+#include "Bfs.h"
 
 #include <QPainter>
 #include <QPaintEvent>
@@ -37,6 +38,7 @@ private:
     Ui::MainWindow *ui;
     Grafo *grafo, *tmp;
     Dfs *dfs;
+    Bfs *bfs;
 
 protected:
     virtual void paintEvent(QPaintEvent *);

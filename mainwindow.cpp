@@ -152,6 +152,10 @@ void MainWindow::on_MostrarCaminhoButton_clicked()
             break;
         case 1:
             qDebug() << "BFS";
+            bfs = new Bfs();
+            bfs->setParameters(grafo, ui->cbOrigem->currentIndex(), ui->cbFinal->currentIndex());
+            bfs->start();
+            connect(bfs, SIGNAL(sinal()), SLOT(slot()));
             break;
         case 2:
             qDebug() << "Ordenação Topologica";

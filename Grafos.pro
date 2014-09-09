@@ -20,7 +20,8 @@ HEADERS += \
     vertice.h \
     mainwindow.h \
     Aresta.h \
-    Dfs.h
+    Dfs.h \
+    Bfs.h
 
 FORMS += \
     mainwindow.ui
