@@ -39,22 +39,22 @@ class Bfs : public QThread
             Vertice **V = grafo->getVertice();
             int n = grafo->getVerticeCount();
             int i;
-            for ( i = 1; i < n; i++ ) {
+            for ( i = 0; i < n; i++ ) {
                 qDebug() << "Inicializando vertices";
                 V[i]->setParent(NULL);
                 V[i]->setCor(Qt::white);
                 V[i]->setDistancia(INFINITO);
             }
-            V[0]->setParent(NULL);
-            V[0]->setDistancia(0);
-            V[0]->setCor(Qt::gray);
+            V[this->VerticeInitial]->setPai(NULL);
+            V[this->VerticeInitial]->setDistancia(0);
+            V[this->VerticeInitial]->setCor(Qt::gray);
             qDebug() << "Vai emitir sinal";
             emit sinal();
             sleep(2);
             qDebug() << "Emitiu sinal";
 
             //lista->appendVertice(vertice[0]);
-            lista.append(V[0]);
+            lista.append(V[this->VerticeInitial]);
             //while (!lista->isEmpty() ) {
             while (!lista.empty()) {
                 //vertice->lista->removeInicio();
