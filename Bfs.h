@@ -65,7 +65,7 @@ class Bfs : public QThread
                         verticeAtual->setCor(Qt::gray);
                         emit sinal();
                         sleep(2);
-                        verticeAtual->setPai(V[i]);
+                        verticeAtual->setPai(vertice);
                         verticeAtual->setDistancia(vertice->getDistancia() + 1 );
                         lista.append(verticeAtual);
                     }

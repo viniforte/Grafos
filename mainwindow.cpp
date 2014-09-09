@@ -216,6 +216,7 @@ void MainWindow::on_MostrarCaminhoButton_clicked()
             break;
         case 1:
             qDebug() << "BFS";
+            this->getPath("BFS");
             break;
         case 2:
             qDebug() << "Ordenação Topologica";
