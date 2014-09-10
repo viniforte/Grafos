@@ -207,6 +207,11 @@ void MainWindow::on_start_clicked(){
             break;
         case 5:
             qDebug() << "Kruskal";
+            qDebug() << "Prim";
+            kruskal = new Kruskal();
+            kruskal->setParameters(grafo, ui->cbOrigem->currentIndex(), ui->cbFinal->currentIndex());
+            kruskal->start();
+            connect(kruskal, SIGNAL(sinal()), SLOT(slot()));
             break;
         case 6:
             qDebug() << "Ford-Fulkerson";

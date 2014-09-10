@@ -41,11 +41,10 @@ class Bfs : public QThread
             int i;
             for ( i = 0; i < n; i++ ) {
                 qDebug() << "Inicializando vertices";
-                V[i]->setParent(NULL);
+                V[i]->setPai(NULL);
                 V[i]->setCor(Qt::white);
                 V[i]->setDistancia(INFINITO);
             }
-            V[this->VerticeInitial]->setPai(NULL);
             V[this->VerticeInitial]->setDistancia(0);
             V[this->VerticeInitial]->setCor(Qt::gray);
             qDebug() << "Vai emitir sinal";

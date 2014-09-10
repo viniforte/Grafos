@@ -25,7 +25,11 @@ HEADERS += \
     OrdenacaoTopologica.h \
     Dijkstra.h \
     Prim.h \
+<<<<<<< HEAD
     FordFulkerson.h
+=======
+    Kruskal.h
+>>>>>>> 4395b7c2bd4dfc9af1c282030ea385b10b2fd690
 
 FORMS += \
     mainwindow.ui
