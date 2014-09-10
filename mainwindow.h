@@ -9,6 +9,7 @@
 #include "OrdenacaoTopologica.h"
 #include "Prim.h"
 #include "Dijkstra.h"
+#include "FordFulkerson.h"
 
 #include <QPainter>
 #include <QPaintEvent>
@@ -47,6 +48,7 @@ private:
     OrdenacaoTopologica *ord;
     Prim *prim;
     Dijkstra *dijkstra;
+    FordFulkerson *ford;
 
 protected:
     virtual void paintEvent(QPaintEvent *);

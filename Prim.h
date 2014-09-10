@@ -69,6 +69,10 @@ class Prim : public QThread
         Vertice* popMenor(){
             int menor = 0;
             for (int i= 1; i < lista.size(); i++ ) {
+                qDebug() << "-----------------------------------------";
+                qDebug() << lista.at(menor)->getNome() << " D-> " << lista.at(menor)->getDistancia();
+                qDebug() << lista.at(i)->getNome() << " D-> " << lista.at(i)->getDistancia();
+                qDebug() << "-----------------------------------------";
                 if ( lista.at(i)->getDistancia() < lista.at(menor)->getDistancia() ) {
                     menor = i;
                 }

@@ -193,10 +193,10 @@ void MainWindow::on_start_clicked(){
         case 3:
             qDebug() << "Dijkstra";
             dijkstra = new Dijkstra();
-            qDebug() << "aaa";
             dijkstra->setParameters(grafo, ui->cbOrigem->currentIndex(), ui->cbFinal->currentIndex());
             dijkstra->start();
-            connect(bfs, SIGNAL(sinal()), SLOT(slot()));
+            qDebug() << "aaa";
+            connect(dijkstra, SIGNAL(sinalDijkstra()), SLOT(slot()));
             break;
         case 4:
             qDebug() << "Prim";
@@ -210,6 +210,10 @@ void MainWindow::on_start_clicked(){
             break;
         case 6:
             qDebug() << "Ford-Fulkerson";
+            ford = new FordFulkerson;
+            ford->setParameters(grafo, ui->cbOrigem->currentIndex(), ui->cbFinal->currentIndex());
+            ford->start();
+            connect(ford, SIGNAL(sinalFordFulkerson()), SLOT(slot()));
             break;
         default:
             break;
@@ -233,9 +237,11 @@ void MainWindow::on_MostrarCaminhoButton_clicked()
             break;
         case 3:
             qDebug() << "Dijkstra";
+            this->getPath("Djikstra");
             break;
         case 4:
             qDebug() << "Prim";
+            this->getPath("Prim");
             break;
         case 5:
             qDebug() << "Kruskal";
@@ -250,5 +256,4 @@ void MainWindow::on_MostrarCaminhoButton_clicked()
 
 void MainWindow::slot() {
     update();
-    QThread::sleep(1);
 }

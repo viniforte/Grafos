@@ -12,6 +12,7 @@ public:
         this->id2  = id2; // destino
         this->w    = w;
         this->next = NULL;
+        this->fluxo = w;
     }
 
    /* void Append ( int id1, int id2, int w ) {
@@ -32,6 +33,9 @@ public:
     int getW ()  { return this->w;   }
     int getIdV1() { return this->id1; }
     int getIdV2() { return this->id2; }
+    int getFluxo() { return this->fluxo; }
+
+    void setFluxo( int fluxo ) { this->fluxo = fluxo; }
 
     Aresta *getNext() { return this->next;         }
 
@@ -50,6 +54,7 @@ private:
     int id1;
     int id2;
     int w;
+    int fluxo;
 
 };
 

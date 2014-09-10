@@ -41,6 +41,7 @@ class Dijkstra : public QThread
                 V[i]->setCor(Qt::white);
                 V[i]->setPai(NULL);
                 V[i]->setDistancia(INFINITO);
+                qDebug() << "dentro do for";
             }
 
             V[indexVerticeInicial]->setCor(Qt::gray);
@@ -65,7 +66,7 @@ class Dijkstra : public QThread
                     if ( verticeAtual->getCor() == Qt::white ) {
                         verticeAtual->setCor(Qt::gray);
                         emit sinalDijkstra();
-                        sleep(1);
+                        sleep(2);
                         qDebug() << "Pintou Cinza";
                         lista.append(verticeAtual);
                     }

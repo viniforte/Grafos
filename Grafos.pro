@@ -24,7 +24,8 @@ HEADERS += \
     Bfs.h \
     OrdenacaoTopologica.h \
     Dijkstra.h \
-    Prim.h
+    Prim.h \
+    FordFulkerson.h
 
 FORMS += \
     mainwindow.ui
