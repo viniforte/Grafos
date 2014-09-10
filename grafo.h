@@ -26,7 +26,7 @@ public:
             vertice[i] = NULL;
 
     }
-
+    Aresta* getAresta(){return this->aresta;}
     void add ( QString nome, int x, int y ) {
         if (size<max) {
             qDebug() << "Adicionando vertice " << nome;
@@ -247,7 +247,7 @@ public:
 
 protected:
     Vertice **vertice;
-    Aresta *aresta;
+    Aresta* aresta;
     int max;
     int size;
     int tempo;
