@@ -2,17 +2,18 @@
 #define ARESTA_H
 
 #include <QDebug>
-
+#include <QColor>
 class Aresta : public QObject {
     Q_OBJECT
 
 public:
-    Aresta ( int id1, int id2, int w ) {
+    Aresta ( int id1, int id2, int w, QColor color) {
         this->id1  = id1; // origem
         this->id2  = id2; // destino
         this->w    = w;
         this->next = NULL;
         this->fluxo = w;
+        this->color = color;
     }
 
    /* void Append ( int id1, int id2, int w ) {
@@ -23,18 +24,17 @@ public:
             this->next->Append( id1, id2, w);
     }*/
 
-    static void append ( Aresta **aresta, int id1, int id2, int w ) {
+    static void append ( Aresta **aresta, int id1, int id2, int w , QColor color ) {
         if (*aresta==NULL)
-            *aresta = new Aresta ( id1, id2, w);
+            *aresta = new Aresta ( id1, id2, w, color);
         else
-            append( &(*aresta)->next, id1, id2, w );
+            append( &(*aresta)->next, id1, id2, w ,color);
     }
 
     int getW ()  { return this->w;   }
     int getIdV1() { return this->id1; }
     int getIdV2() { return this->id2; }
     int getFluxo() { return this->fluxo; }
-
     void setFluxo( int fluxo ) { this->fluxo = fluxo; }
 
     Aresta *getNext() { return this->next;         }
@@ -46,8 +46,18 @@ public:
             delete this->next;
     }
 
+    QColor getColor() const
+    {
+    return color;
+    }
+
+    void setColor(const QColor &value)
+    {
+    color = value;
+    }
+
 protected:
-  //  Aresta *next;
+    //  Aresta *next;
 
 private:
     Aresta *next;
@@ -55,7 +65,11 @@ private:
     int id2;
     int w;
     int fluxo;
-
+    QColor color;
 };
 
+
+
 #endif // ARESTA_H
+
+

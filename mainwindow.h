@@ -9,11 +9,8 @@
 #include "OrdenacaoTopologica.h"
 #include "Prim.h"
 #include "Dijkstra.h"
-<<<<<<< HEAD
 #include "FordFulkerson.h"
-=======
 #include "Kruskal.h"
->>>>>>> 4395b7c2bd4dfc9af1c282030ea385b10b2fd690
 
 #include <QPainter>
 #include <QPaintEvent>
@@ -52,11 +49,8 @@ private:
     OrdenacaoTopologica *ord;
     Prim *prim;
     Dijkstra *dijkstra;
-<<<<<<< HEAD
     FordFulkerson *ford;
-=======
     Kruskal *kruskal;
->>>>>>> 4395b7c2bd4dfc9af1c282030ea385b10b2fd690
 
 protected:
     virtual void paintEvent(QPaintEvent *);

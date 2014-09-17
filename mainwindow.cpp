@@ -38,7 +38,6 @@ void MainWindow::paintEvent(QPaintEvent *) {
     int n = tmp->getVerticeCount();
 
     // Pintar primeiramente as arestas
-    painter.setPen( Qt::black );
     painter.setPen( Qt::SolidLine );
 
     for (int i=0; i<n; i++) {
@@ -46,6 +45,7 @@ void MainWindow::paintEvent(QPaintEvent *) {
         while (a!=NULL) {
             v1 = vertice[a->getIdV1()];
             v2 = vertice[a->getIdV2()];
+            painter.setPen( a->getColor() );
             painter.drawLine( QPoint (v1->getX(), v1->getY()), QPoint (v2->getX(), v2->getY()) );
             a = a->getNext();
         }
@@ -118,7 +118,7 @@ void MainWindow::on_actionLoad_triggered() {
 
                 sl = line.split(",");
                 if (sl.count()==3)
-                    grafo->addAresta(sl[0], sl[1], sl[2].toInt() );
+                    grafo->addAresta(sl[0], sl[1], sl[2].toInt(),Qt::blue );
                 else {
                     QMessageBox::critical(this,"Carregar arestas", "Erro na estrutura do arquivo - n�s [node, coord. x, coord. y]!");
                     return;
@@ -207,11 +207,10 @@ void MainWindow::on_start_clicked(){
             break;
         case 5:
             qDebug() << "Kruskal";
-            qDebug() << "Prim";
             kruskal = new Kruskal();
             kruskal->setParameters(grafo, ui->cbOrigem->currentIndex(), ui->cbFinal->currentIndex());
             kruskal->start();
-            connect(kruskal, SIGNAL(sinal()), SLOT(slot()));
+            connect(kruskal, SIGNAL(sinal()), SLOT(slot()),Qt::QueuedConnection);
             break;
         case 6:
             qDebug() << "Ford-Fulkerson";
@@ -260,5 +259,6 @@ void MainWindow::on_MostrarCaminhoButton_clicked()
 }
 
 void MainWindow::slot() {
+    qDebug() << "pintou cacete";
     update();
 }

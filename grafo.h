@@ -36,14 +36,14 @@ public:
             qDebug() << "Número de vertices maior que o informado!";
     }
 
-    bool addAresta ( QString source, QString target, int w ) {
+    bool addAresta ( QString source, QString target, int w , QColor color) {
         int s = getVerticeIndex(source);
         int t = getVerticeIndex(target);
         if ((s==-1) || (t==-1)) {
             qDebug() << "Vertice de [origem|destino] não encontrado: " << source << ", " << target;
             return false;
         }
-        Aresta::append( &aresta, s, t, w );
+        Aresta::append( &aresta, s, t, w ,color);
         vertice[s]->add( s, t, w);
         return true;
     }
@@ -100,7 +100,12 @@ public:
         qDebug() << "Pinta Vermelho";
         emit sinal();
     }
-
+    int getVerticeIndex ( QString nome ) {
+        for (int i=0; i<size; i++)
+            if ((vertice[i]!=NULL) && (vertice[i]->getNome()==nome.toUpper()))
+                return i;
+        return -1;
+    }
     //TOPOLOGICA
     /*void dfsOrdenacaoTopologica ( Lista **lista ) {
         *lista = new Lista();
@@ -253,12 +258,7 @@ protected:
     int tempo;
     Vertice **vKruscal;
 
-    int getVerticeIndex ( QString nome ) {
-        for (int i=0; i<size; i++)
-            if ((vertice[i]!=NULL) && (vertice[i]->getNome()==nome.toUpper()))
-                return i;
-        return -1;
-    }
+
 
 
 };

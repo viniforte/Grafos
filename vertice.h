@@ -26,7 +26,7 @@ public:
 
     }
 
-    void add ( int id1, int id2, int w ) { Aresta::append( &aresta, id1, id2, w ); }
+    void add ( int id1, int id2, int w) { Aresta::append( &aresta, id1, id2, w, Qt::blue); }
     Aresta *getAresta ()                 { return this->aresta; }
     QString getNome ()                   { return this->nome; }
     int     getX ()                      { return this->x;    }
@@ -34,6 +34,8 @@ public:
     QColor  getCor ()                    { return this->cor;  }
     int getDistancia()                   { return this->distancia; }
 
+    QString getLista (){return this->lista;}
+    void setLista (QString lista){this->lista = lista;}
     void setPai(Vertice *pai) { this->pai = pai; }
     Vertice* getPai (){return this->pai;}
     void setCor(QColor cor)  { this->cor = cor; }
@@ -47,6 +49,16 @@ public:
             delete this->aresta;
     };
 
+    int getId() const
+    {
+    return id;
+    }
+
+    void setId(int value)
+    {
+    id = value;
+    }
+
 protected:
     int id; // Index do vértice no vetor
     QString nome;
@@ -57,10 +69,14 @@ protected:
     QColor cor; // cor do vértice
     Aresta *aresta;
     Vertice *pai;
-
+    QString lista;
     int x;
     int y;
 
 };
 
+
+
+
 #endif // VERTICE_H
+
