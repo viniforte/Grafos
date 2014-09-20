@@ -1,264 +1,136 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-#include "grafo.h"
-
 #include <QFile>
 #include <QFileDialog>
 #include <QMessageBox>
+#define DFS 0
+#define BFS 1
+#define ORDENACAO 2
+#define PRIM 3
+#define KRUSKAL 4
+#define DIJKSTRA 5
+#define FF 6
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow) {
 
     ui->setupUi(this);
-    //this->p
+
     this->ui->toolBar->addWidget( this->ui->labelInicial );
     this->ui->toolBar->addWidget( this->ui->cbOrigem );
-    this->ui->toolBar->addWidget( this->ui->labelFinal  );
-    this->ui->toolBar->addWidget( this->ui->cbFinal );
+    this->ui->toolBar->addWidget(this->ui->metodos);
     this->ui->toolBar->addWidget(this->ui->start);
-    this->ui->statusBar->addWidget( this->ui->caminho );
-    this->ui->statusBar->addWidget( this->ui->MostrarCaminhoButton );
+    this->ui->statusBar->addWidget( this->ui->labelFinal  );
+    this->ui->statusBar->addWidget( this->ui->cbFinal );
+    this->ui->statusBar->addWidget( this->ui->textEdit );
+    this->ui->statusBar->addWidget( this->ui->pushButton );
 
     QMainWindow::paintEvent(new QPaintEvent(this->geometry()));
-    this->grafo=this->tmp=NULL;
-    connect( this, SIGNAL (mostrar(Grafo * )), this, SLOT(mostrarGrafo(Grafo*)) );
+
+    this->graph=new Graph(0, this);
+    this->tmp=NULL;
+
+    connect( this, SIGNAL (mostrar( Graph* )), this, SLOT ( mostrarGrafo(Graph* ) ) );
+
+
+    this->alg = NULL;
+
+    idmostrar=0;
+}
+
+void MainWindow::mostrarLista(QList<Vertex *> lista){
+    qDebug() << "mostrarLista";
+    QString str = "";
+    this->ui->textEdit->append("Ordem Topologica");
+    foreach (Vertex * vertice, lista){
+        str = vertice->getName() + str;
+        if (!lista.endsWith(vertice)) str = " - " + str;
+    }
+    this->ui->textEdit->append(str);
+}
+
+void MainWindow::getPath(QString metodo){
+    Vertex * ver = this->graph->getVertex()[ui->cbFinal->currentIndex()];
+    QString msg = "";
+    int cont = 0;
+    while (ver->getFather() != NULL){
+        msg = ver->getName() + msg;
+        msg = " -> " + msg;
+        ver = ver->getFather();
+        cont++;
+    }
+    msg = this->graph->getVertex()[ui->cbOrigem->currentIndex()]->getName() + msg;
+    qDebug() << msg;
+    this->ui->textEdit->setText(metodo + "\n" + msg);
+}
+
+void MainWindow::createAlgoritm ( int i ) {
+    if (alg) delete alg;
+    switch (i) {
+    case DFS : this->alg = new Dfs ( graph, ui->cbOrigem->currentIndex(), this ); break;
+    case BFS : this->alg = new Bfs ( graph, ui->cbOrigem->currentIndex(), this );  break;
+    case ORDENACAO : {
+
+        this->ord = new OrdenacaoTopologica ( graph, ui->cbOrigem->currentIndex(), this );
+        connect( ord,  SIGNAL ( update(Graph*)), this, SLOT ( mostrarGrafo(Graph* ) ) );
+        this->ord->start();
+        break;
+    }
+    case PRIM : this->alg = new Prim ( graph, ui->cbOrigem->currentIndex(),this, this ); break;
+    case DIJKSTRA : this->alg = new Dijkstra ( graph, ui->cbOrigem->currentIndex(),this, this  ); break;
+    case KRUSKAL : this->alg = new kruskal ( graph, this, this ); break;
+    }
+    if (i != ORDENACAO){
+        connect( alg,  SIGNAL ( update(Graph*)), this, SLOT ( mostrarGrafo(Graph* ) ) );
+        alg->start();
+    }
 }
 
 void MainWindow::paintEvent(QPaintEvent *) {
-    if (this->tmp==NULL) return;
-
-    QPainter painter(this);
-    painter.setPen(Qt::SolidLine);
-
-    Vertice **vertice = tmp->getVertice();
-    Vertice *v, *v1, *v2;
-    Aresta *a;
-    int n = tmp->getVerticeCount();
-
-    // Pintar primeiramente as arestas
-    painter.setPen( Qt::SolidLine );
-
-    for (int i=0; i<n; i++) {
-        a=vertice[i]->getAresta();
-        while (a!=NULL) {
-            v1 = vertice[a->getIdV1()];
-            v2 = vertice[a->getIdV2()];
-            painter.setPen( a->getColor() );
-            painter.drawLine( QPoint (v1->getX(), v1->getY()), QPoint (v2->getX(), v2->getY()) );
-            a = a->getNext();
-        }
-    }
-    for (int i=0; i<n; i++) {
-        v=vertice[i];
-        painter.setBrush ( v->getCor() );
-        painter.setPen( (v->getCor()==Qt::white)? Qt::black : Qt::white );
-        painter.drawEllipse( v->getX()-20,  v->getY()-20, 40, 40 );
-        QRect r1 ( v->getX()-4,  v->getY()-8, v->getX()+4,  v->getY()+8 );
-        painter.drawText( r1, v->getNome() );
-    }
+    graph->paint();
+    if (!this->tmp) return;
+    tmp->paint();
 }
 
-void MainWindow::mostrarGrafo ( Grafo *g ) {
-    this->tmp=g;
-    update();
+void MainWindow::mostrarGrafo ( Graph *g ) {
+    this->tmp = g;
+    update ();
 }
 
 void MainWindow::on_actionLoad_triggered() {
     QDir::setCurrent("../files");
     qDebug() << QDir::currentPath();
     QString filename =  QFileDialog::getOpenFileName( this, tr("Open Document"),
-                                                     QDir::currentPath(),
-                                                     tr("Document files (*.txt);All files (*.*)"), 0,
-                                                     QFileDialog::DontUseNativeDialog );
+                                                      QDir::currentPath(),
+                                                      tr("Document files (*.txt);All files (*.*)"), 0,
+                                                      QFileDialog::DontUseNativeDialog );
     if( !filename.isNull() ) {
-        qDebug() << filename;
+        //qDebug() << filename.toAscii();
+        QString s = graph->loadFromFile(filename);
+        ui->cbOrigem->addItems( s.split(";"));
+        ui->cbFinal->addItems( s.split( ";") );
+        emit mostrar ( graph );
+    }
+}
 
-        QFile file( filename );
-        if(!file.open(QIODevice::ReadOnly)) {
-            qDebug() << "error " << file.errorString();
-            QMessageBox::critical(this, "Lendo arquivo", "Erro na leitura do arquivo selecionado");
-            return;
-        }
-        QTextStream in(&file);
-        QString line;
-        QStringList sl;
+void MainWindow::on_start_clicked() {
+    if (this->graph!=NULL) {
+        createAlgoritm( this->ui->metodos->currentIndex() );
+       }
+}
 
-        if (grafo!=NULL) delete grafo;
-        line = in.readLine();     // nï¿½mero de vï¿½rtices
-        grafo = new Grafo ( line.toInt(), this );
-
-        ui->cbOrigem->clear();
-        ui->cbFinal->clear();
-        bool loadvertice = true;
-        while(!in.atEnd() && loadvertice) {
-            line = in.readLine();
-            if (line.length()>0 && line.at(0)!='(') {
-                //line = 1,100,100 ==> nome vï¿½rtice, coordenada x, coordenada y
-                sl = line.split(",");
-                if (sl.count()==3) {
-                    grafo->add( sl[0], sl[1].toInt(), sl[2].toInt() );
-                    ui->cbOrigem->addItem( sl[0] );
-                    ui->cbFinal->addItem( sl[0] );
-                } else {
-                    QMessageBox::critical(this,"Carregar vï¿½rtices", "Erro na estrutura do arquivo - nï¿½s [node, coord. x, coord. y]!");
-                    return;
-                }
-            } else
-                loadvertice = false;
-        }
-        if (!in.atEnd()) {
-            do {
-                // line = (1,2,5)
-                line = line.mid(1, line.length() -2 );
-
-                //line = 1,2,5
-                //qDebug() << line;
-
-                sl = line.split(",");
-                if (sl.count()==3)
-                    grafo->addAresta(sl[0], sl[1], sl[2].toInt(),Qt::blue );
-                else {
-                    QMessageBox::critical(this,"Carregar arestas", "Erro na estrutura do arquivo - nï¿½s [node, coord. x, coord. y]!");
-                    return;
-                }
-
-                line = in.readLine();
-            } while(!in.atEnd());
-        }
-
-        qDebug() << "Carregado com sucesso!";
-        file.close();
-
-        emit mostrar ( grafo );
+void MainWindow::on_pushButton_clicked() {
+    switch (ui->metodos->currentIndex()) {
+        case DFS : getPath("DFS");break;
+        case BFS : getPath("BFS");break;
+        case ORDENACAO : mostrarLista(this->ord->getList());break;
     }
 }
 
 MainWindow::~MainWindow() {
-    if (grafo!=NULL)
-        delete grafo;
+    if (graph) delete graph;
+    if (alg) delete alg;
     delete ui;
-}
-
-void MainWindow::mostrarLista(QList<Vertice *> lista){
-    qDebug() << "mostrarLista";
-    QString str = "";
-    this->ui->caminho->append("Ordem Topologica");
-    foreach (Vertice * vertice, lista){
-        str += vertice->getNome();
-        if (!lista.endsWith(vertice)) str += " - ";
-    }
-    this->ui->caminho->append(str);
-}
-
-void MainWindow::getPath(QString metodo){
-    Vertice * ver = this->grafo->getVertice()[ui->cbFinal->currentIndex()];
-    QString msg = "";
-    int cont = 0;
-    while (ver->getPai() != NULL){
-        msg = ver->getNome() + msg;
-        msg = " -> " + msg;
-        ver = ver->getPai();
-        cont++;
-    }
-    msg = this->grafo->getVertice()[ui->cbOrigem->currentIndex()]->getNome() + msg;
-    qDebug() << msg;
-    this->ui->caminho->setText(metodo + "\n" + msg);
-}
-
-void MainWindow::on_start_clicked(){
-    switch ( this->ui->cdMetodo->currentIndex()) {
-        case 0:
-            qDebug() << "DFS";
-            dfs = new Dfs();
-            dfs->setParameters(grafo, ui->cbOrigem->currentIndex(), ui->cbFinal->currentIndex());
-            dfs->start();
-            connect(dfs, SIGNAL(sinal()), SLOT(slot()));
-            break;
-        case 1:
-            qDebug() << "BFS";
-            bfs = new Bfs();
-            bfs->setParameters(grafo, ui->cbOrigem->currentIndex(), ui->cbFinal->currentIndex());
-            bfs->start();
-            connect(bfs, SIGNAL(sinal()), SLOT(slot()));
-            break;
-        case 2:
-            qDebug() << "Ordenação Topologica";
-            ord = new OrdenacaoTopologica();
-            ord->setParameters(grafo, ui->cbOrigem->currentIndex(), ui->cbFinal->currentIndex());
-            ord->start();
-            connect(ord, SIGNAL(sinal()), SLOT(slot()));
-            break;
-        case 3:
-            qDebug() << "Dijkstra";
-            dijkstra = new Dijkstra();
-            dijkstra->setParameters(grafo, ui->cbOrigem->currentIndex(), ui->cbFinal->currentIndex());
-            dijkstra->start();
-            qDebug() << "aaa";
-            connect(dijkstra, SIGNAL(sinalDijkstra()), SLOT(slot()));
-            break;
-        case 4:
-            qDebug() << "Prim";
-            prim = new Prim();
-            prim->setParameters(grafo, ui->cbOrigem->currentIndex(), ui->cbFinal->currentIndex());
-            prim->start();
-            connect(prim, SIGNAL(sinalPrim()), SLOT(slot()));
-            break;
-        case 5:
-            qDebug() << "Kruskal";
-            kruskal = new Kruskal();
-            kruskal->setParameters(grafo, ui->cbOrigem->currentIndex(), ui->cbFinal->currentIndex());
-            kruskal->start();
-            connect(kruskal, SIGNAL(sinal()), SLOT(slot()),Qt::QueuedConnection);
-            break;
-        case 6:
-            qDebug() << "Ford-Fulkerson";
-            ford = new FordFulkerson;
-            ford->setParameters(grafo, ui->cbOrigem->currentIndex(), ui->cbFinal->currentIndex());
-            ford->start();
-            connect(ford, SIGNAL(sinalFordFulkerson()), SLOT(slot()));
-            break;
-        default:
-            break;
-    }
-}
-
-void MainWindow::on_MostrarCaminhoButton_clicked()
-{
-    switch ( this->ui->cdMetodo->currentIndex()) {
-        case 0:
-            qDebug() << "DFS";
-            this->getPath("DFS");
-            break;
-        case 1:
-            qDebug() << "BFS";
-            this->getPath("BFS");
-            break;
-        case 2:
-            qDebug() << "Ordenação Topologica";
-            this->mostrarLista(ord->getList());
-            break;
-        case 3:
-            qDebug() << "Dijkstra";
-            this->getPath("Djikstra");
-            break;
-        case 4:
-            qDebug() << "Prim";
-            this->getPath("Prim");
-            break;
-        case 5:
-            qDebug() << "Kruskal";
-            break;
-        case 6:
-            qDebug() << "Ford-Fulkerson";
-            break;
-        default:
-            break;
-    }
-}
-
-void MainWindow::slot() {
-    qDebug() << "pintou cacete";
-    update();
 }

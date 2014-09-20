@@ -1,11 +1,12 @@
-#include "Dfs.h"
+#include "FordFulkerson.h"
 
-Dfs::Dfs( Graph *g, int index, QObject *parent ) : QThread(parent) {
+FordFulkerson::FordFulkerson( Graph *g, int index, int final, QObject *parent ) : QThread(parent) {
     this->g = g;
     this->index = index;
+    this->final = final;
 }
 
-Dfs::~Dfs () {
+FordFulkerson::~FordFulkerson () {
     delete g;
 }
 

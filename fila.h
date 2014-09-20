@@ -1,7 +1,7 @@
 #ifndef LISTA_H
 #define LISTA_H
 
-#include "Aresta.h"
+/*#include "Aresta.h"
 #include "vertice.h"
 
 class Elemento {
@@ -62,7 +62,7 @@ public:
 private:
     Elemento *first;
     Elemento *last;
-};
+};*/
 
 
 #endif // LISTA_H

@@ -1,82 +1,33 @@
 #ifndef BFS_H
 #define BFS_H
 
+
 #include <QThread>
-#include <QList>
-#include "grafo.h"
-#include "vertice.h"
+#include <QDebug>
+#include <QString>
+#include <QColor>
+#include <QMainWindow>
 
-
-
-class Bfs : public QThread
-{
+#include "graph.h"
+#define INFINITO 1000000
+class Bfs : public QThread {
     Q_OBJECT
-    public:
-        void setParameters(Grafo * g, int initial, int final) {
-            this->grafo = g;
-            this->VerticeInitial = initial;
-            this->VerticeFinal = final;
-        }
 
-        void run() {
-            metodoBFS();
-        }
-    private:
-        int tempo;
-        int VerticeInitial;
-        int VerticeFinal;
-        Grafo *grafo;
-    signals:
-        void sinal();
+public:
+    Bfs ( Graph *g,int vert, QObject *parent=0 );
 
-    public:
-        void metodoBFS() {
-            //Lista lista = new Lista();
-            qDebug() << "chegou metodoBFS";
-            QList<Vertice *> lista;
-            Vertice *verticeAtual, *vertice;
-            Aresta *aresta;
-            Vertice **V = grafo->getVertice();
-            int n = grafo->getVerticeCount();
-            int i;
-            for ( i = 0; i < n; i++ ) {
-                qDebug() << "Inicializando vertices";
-                V[i]->setPai(NULL);
-                V[i]->setCor(Qt::white);
-                V[i]->setDistancia(INFINITO);
-            }
-            V[this->VerticeInitial]->setDistancia(0);
-            V[this->VerticeInitial]->setCor(Qt::gray);
-            qDebug() << "Vai emitir sinal";
-            emit sinal();
-            sleep(2);
-            qDebug() << "Emitiu sinal";
+    ~Bfs () ;
 
-            //lista->appendVertice(vertice[0]);
-            lista.append(V[this->VerticeInitial]);
-            //while (!lista->isEmpty() ) {
-            while (!lista.empty()) {
-                //vertice->lista->removeInicio();
-                vertice = lista.takeFirst();
-                for ( aresta = vertice->getAresta(); aresta != NULL; aresta = aresta->getNext() ) {
-                    verticeAtual = V[aresta->getIdV2()];
-                    if ( verticeAtual->getCor() == Qt::white ) {
-                        verticeAtual->setCor(Qt::gray);
-                        emit sinal();
-                        sleep(2);
-                        verticeAtual->setPai(vertice);
-                        verticeAtual->setDistancia(vertice->getDistancia() + 1 );
-                        lista.append(verticeAtual);
-                    }
-                }
-                vertice->setCor(Qt::black);
-                emit sinal();
-                sleep(2);
-                qDebug() << "Emitiu sinal";
-            }
-        }
+protected:
+    void run();
 
+signals:
+    void update ( Graph * );
 
+private:
+    Graph *g;
+    int verticeInicial;
+    void metodoBFS ();
 
 };
 

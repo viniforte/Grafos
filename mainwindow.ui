@@ -6,19 +6,19 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>685</width>
+    <width>613</width>
     <height>421</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Projeto e Analise de Algoritmos (Ciência da Compuação)</string>
+   <string>Projeto e Analise de Algoritmos (Ciência da Computação)</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <widget class="QComboBox" name="cbOrigem">
     <property name="geometry">
      <rect>
-      <x>470</x>
-      <y>50</y>
+      <x>160</x>
+      <y>20</y>
       <width>191</width>
       <height>22</height>
      </rect>
@@ -27,8 +27,8 @@
    <widget class="QLabel" name="labelInicial">
     <property name="geometry">
      <rect>
-      <x>360</x>
-      <y>50</y>
+      <x>50</x>
+      <y>20</y>
       <width>101</width>
       <height>16</height>
      </rect>
@@ -60,7 +60,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="QTextEdit" name="caminho">
+   <widget class="QTextEdit" name="textEdit">
     <property name="geometry">
      <rect>
       <x>160</x>
@@ -70,24 +70,24 @@
      </rect>
     </property>
    </widget>
-   <widget class="QPushButton" name="MostrarCaminhoButton">
+   <widget class="QPushButton" name="pushButton">
     <property name="geometry">
      <rect>
       <x>160</x>
       <y>260</y>
-      <width>201</width>
-      <height>41</height>
+      <width>131</width>
+      <height>23</height>
      </rect>
     </property>
     <property name="text">
      <string>Mostrar Caminho</string>
     </property>
    </widget>
-   <widget class="QComboBox" name="cdMetodo">
+   <widget class="QComboBox" name="metodos">
     <property name="geometry">
      <rect>
-      <x>80</x>
-      <y>0</y>
+      <x>390</x>
+      <y>60</y>
       <width>191</width>
       <height>22</height>
      </rect>
@@ -104,54 +104,41 @@
     </item>
     <item>
      <property name="text">
-      <string>Ordenação Topologica</string>
+      <string>ORDENAÇÃO TOPOLÓGICA</string>
      </property>
     </item>
     <item>
      <property name="text">
-      <string>Dijkstra</string>
+      <string>PRIM</string>
      </property>
     </item>
     <item>
      <property name="text">
-      <string>Prim</string>
+      <string>KRUSKAL</string>
      </property>
     </item>
     <item>
      <property name="text">
-      <string>Kruskal</string>
+      <string>DIJKSTRA</string>
      </property>
     </item>
     <item>
      <property name="text">
-      <string>Ford-Fulkerson</string>
+      <string>FORD FUCKERSON</string>
      </property>
     </item>
-   </widget>
-   <widget class="QLabel" name="labelInicial_2">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>0</y>
-      <width>71</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Metodo:</string>
-    </property>
    </widget>
    <widget class="QPushButton" name="start">
     <property name="geometry">
      <rect>
-      <x>450</x>
-      <y>180</y>
+      <x>380</x>
+      <y>130</y>
       <width>75</width>
       <height>23</height>
      </rect>
     </property>
     <property name="text">
-     <string>Start Method</string>
+     <string>START</string>
     </property>
    </widget>
   </widget>
@@ -160,7 +147,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>685</width>
+     <width>613</width>
      <height>21</height>
     </rect>
    </property>

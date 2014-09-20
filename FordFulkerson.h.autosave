@@ -1,5 +1,5 @@
-#ifndef DFS_H
-#define DFS_H
+#ifndef FORDFULKERSON_H
+#define FORDFULKERSON_H
 
 #define INFINITO 1000000
 #include <QThread>
@@ -13,15 +13,15 @@
 
 #define INF  100000
 
-class Dfs : public QThread {
+class FordFulkerson : public QThread {
     Q_OBJECT
 
 public:
-    Dfs ( Graph *g, int index, QObject *parent=0 );
+    FordFulkerson ( Graph *g, int index, QObject *parent=0 );
 
     Graph *getGraph();
 
-    ~Dfs () ;
+    ~FordFulkerson () ;
 
 protected:
     void run();
@@ -32,12 +32,12 @@ signals:
 private:
     Graph *g;
     int tempo;
-    int index;
-    void metodoDFS ();
+    int index,final;
+    void fordFulkerson ();
 
     void visit (Vertex *);
 
     //void createNewGraph ( int );
 };
 
-#endif // DFS_H
+#endif // FORDFULKERSON_H

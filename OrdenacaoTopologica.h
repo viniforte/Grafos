@@ -1,73 +1,40 @@
 #ifndef ORDENACAOTOPOLOGICA_H
 #define ORDENACAOTOPOLOGICA_H
 
+#define INFINITO 1000000
 #include <QThread>
-#include "grafo.h"
-#include "vertice.h"
+#include <QDebug>
+#include <QString>
+#include <QColor>
+#include <QMainWindow>
+#include "graph.h"
 
 
-class OrdenacaoTopologica : public QThread
-{
+#define INF  100000
+
+class OrdenacaoTopologica : public QThread {
     Q_OBJECT
-    public:
-        void setParameters(Grafo * g, int initial, int final) {
-            this->grafo = g;
-            this->VerticeInitial = initial;
-            this->VerticeFinal = final;
-        }
 
-        void run() {
-            ordenacaoTopologica();
-        }
+public:
+    OrdenacaoTopologica (Graph *g, int index, QObject *parent=0 );
 
-        QList <Vertice *> getList (){return lista;}
-        Grafo * getGrafo (){return grafo;}
-    private:
-        int tempo;
-        int VerticeInitial;
-        int VerticeFinal;
-        Grafo *grafo;
-        QList<Vertice *> lista;
-    signals:
-        void sinal();
+    Graph *getGraph();
+    QList <Vertex *> getList(){return lista;}
+    ~OrdenacaoTopologica () ;
 
-    public:
-         void ordenacaoTopologica() {
-            Vertice **V = grafo->getVertice();
-            int n = grafo->getVerticeCount();
-            for(int i = 0; i < n; i++) {
-                V[i]->setPai(NULL);
-                V[i]->setTempoEntrada(INFINITO);
-                V[i]->setTempoSaida(INFINITO);
-                V[i]->setCor(Qt::white);
-            }
-            tempo = 0;
-            for(int i = VerticeInitial; i < n; i++) {
-                if(V[i]->getCor() == Qt::white) {
-                    visit(V[i]);
-                }
-            }
-        }
+protected:
+    void run();
 
-        void visit(Vertice *v) {
-            Aresta *a; Vertice *va;
-            v->setCor(Qt::gray);
-            emit sinal();
-            sleep(2);
-            v->setTempoEntrada(tempo++);
-            for(a = v->getAresta(); a != NULL; a = a->getNext()) {
-                va = grafo->getVertice()[a->getIdV2()];
-                //qDebug() << v->getNome().toStdString() << ' ' << va->getNome().toStdString();
-                if(va->getCor() == Qt::white) {
-                    va->setPai(v);
-                    visit(va);
-                }
-            }
-            v->setTempoSaida(tempo++);
-            v->setCor(Qt::black);
-            lista.append(v);
-            emit sinal();
-            sleep(2);
-        }
+signals:
+    void update ( Graph * );
+
+private:
+    Graph *g;
+    int tempo;
+    int index;
+    QList <Vertex*> lista;
+    void ordenacaoTopologica ();
+
+    void visit (Vertex *);
 };
 #endif // ORDENACAOTOPOLOGICA_H

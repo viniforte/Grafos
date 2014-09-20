@@ -1,19 +1,19 @@
-#include "Dfs.h"
+#include "OrdenacaoTopologica.h"
 
-Dfs::Dfs( Graph *g, int index, QObject *parent ) : QThread(parent) {
+OrdenacaoTopologica::OrdenacaoTopologica( Graph *g, int index,QObject *parent ) : QThread(parent) {
     this->g = g;
     this->index = index;
 }
 
-Dfs::~Dfs () {
+OrdenacaoTopologica::~OrdenacaoTopologica () {
     delete g;
 }
 
-void Dfs::run () {
-    metodoDFS();
+void OrdenacaoTopologica::run () {
+    ordenacaoTopologica();
 }
 
-void Dfs:: metodoDFS() {
+void OrdenacaoTopologica:: ordenacaoTopologica() {
     Vertex **V = g->getVertex();
     int n = g->getVertexCount();
     for(int i = this->index; i < n; i++) {
@@ -30,7 +30,7 @@ void Dfs:: metodoDFS() {
     }
 }
 
-void Dfs::visit(Vertex *v) {
+void OrdenacaoTopologica::visit(Vertex *v) {
     Edge *a; Vertex *va;
     v->setColor(Qt::gray);
     emit update(g);
@@ -45,6 +45,7 @@ void Dfs::visit(Vertex *v) {
     }
     v->setTo(tempo++);
     v->setColor(Qt::black);
+    lista.append(v);
     emit update(g);
     sleep(1);
 }

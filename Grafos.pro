@@ -2,9 +2,18 @@ TEMPLATE = app
 
 QT += qml quick widgets
 
-SOURCES += main.cpp \
+SOURCES += edge.cpp \
+    graph.cpp \
+    kruskal.cpp \
+    main.cpp \
     mainwindow.cpp \
-    grafo.cpp
+    vertex.cpp \
+    Dfs.cpp \
+    Bfs.cpp \
+    Prim.cpp \
+    OrdenacaoTopologica.cpp \
+    Dijkstra.cpp \
+    FordFulkerson.cpp
 
 RESOURCES += qml.qrc
 
@@ -16,17 +25,18 @@ include(deployment.pri)
 
 HEADERS += \
     fila.h \
-    grafo.h \
-    vertice.h \
+    graph.h \
+    vertex.h \
     mainwindow.h \
-    Aresta.h \
+    edge.h \
     Dfs.h \
     Bfs.h \
     OrdenacaoTopologica.h \
     Dijkstra.h \
     Prim.h \
-    FordFulkerson.h \
-    Kruskal.h
+    Kruskal.h \
+    list.h \
+    FordFulkerson.h
 
 FORMS += \
     mainwindow.ui

@@ -1,19 +1,20 @@
-#include "Dfs.h"
+#include "FordFulkerson.h"
 
-Dfs::Dfs( Graph *g, int index, QObject *parent ) : QThread(parent) {
+FordFulkerson::FordFulkerson( Graph *g, int index, int final, QObject *parent ) : QThread(parent) {
     this->g = g;
     this->index = index;
+    this->final = final;
 }
 
-Dfs::~Dfs () {
+FordFulkerson::~FordFulkerson () {
     delete g;
 }
 
-void Dfs::run () {
-    metodoDFS();
+void FordFulkerson::FordFulkerson () {
+    fordFulkerson();
 }
 
-void Dfs:: metodoDFS() {
+void FordFulkerson:: fordFulkerson() {
     Vertex **V = g->getVertex();
     int n = g->getVertexCount();
     for(int i = this->index; i < n; i++) {
@@ -23,7 +24,7 @@ void Dfs:: metodoDFS() {
         V[i]->setColor(Qt::white);
     }
     tempo = 0;
-    for(int i = 0; i < n; i++) {
+    for(int i = index; i < n; i++) {
         if(V[i]->getColor() == Qt::white) {
             visit(V[i]);
         }
