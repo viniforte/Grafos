@@ -1,12 +1,12 @@
 #include "Dfs.h"
 
-Dfs::Dfs( Graph *g, int index, QObject *parent ) : QThread(parent) {
-    this->g = g;
-    this->index = index;
+Dfs::Dfs( Grafo *grafo, int indice, QObject *parent ) : QThread(parent) {
+    this->grafo = grafo;
+    this->indice = indice;
 }
 
 Dfs::~Dfs () {
-    delete g;
+    delete grafo;
 }
 
 void Dfs::run () {
@@ -14,37 +14,37 @@ void Dfs::run () {
 }
 
 void Dfs:: metodoDFS() {
-    Vertex **V = g->getVertex();
-    int n = g->getVertexCount();
-    for(int i = this->index; i < n; i++) {
-        V[i]->setFather(NULL);
-        V[i]->setTi(INFINITO);
-        V[i]->setTo(INFINITO);
-        V[i]->setColor(Qt::white);
+    Vertice **ListaVertice = grafo->getVertice();
+    int quantidade = grafo->getQuantidadeVertice();
+    for(int i = this->indice; i < quantidade; i++) {
+        ListaVertice[i]->setPai(NULL);
+        ListaVertice[i]->setTempoEntrada(INFINITO);
+        ListaVertice[i]->setTempoSaida(INFINITO);
+        ListaVertice[i]->setCor(Qt::white);
     }
     tempo = 0;
-    for(int i = 0; i < n; i++) {
-        if(V[i]->getColor() == Qt::white) {
-            visit(V[i]);
+    for(int i = 0; i < quantidade; i++) {
+        if(ListaVertice[i]->getCor() == Qt::white) {
+            visit(ListaVertice[i]);
         }
     }
 }
 
-void Dfs::visit(Vertex *v) {
-    Edge *a; Vertex *va;
-    v->setColor(Qt::gray);
-    emit update(g);
+void Dfs::visit(Vertice *vertice) {
+    Aresta *aresta; Vertice *verticeAtual;
+    vertice->setCor(Qt::gray);
+    emit update(grafo);
     sleep(1);
-    v->setTi(tempo++);
-    for(a = v->getEdges(); a ; a = a->getNext()) {
-        va = g->getVertex()[a->getIdAdj()];
-        if(va->getColor() == Qt::white) {
-            va->setFather(v);
-            visit(va);
+    vertice->setTempoEntrada(tempo++);
+    for(aresta = vertice->getArestas(); aresta; aresta = aresta->getProximo()) {
+        verticeAtual = grafo->getVertice()[aresta->getIndiceAdj()];
+        if(verticeAtual->getCor() == Qt::white) {
+            verticeAtual->setPai(vertice);
+            visit(verticeAtual);
         }
     }
-    v->setTo(tempo++);
-    v->setColor(Qt::black);
-    emit update(g);
+    vertice->setTempoSaida(tempo++);
+    vertice->setCor(Qt::black);
+    emit update(grafo);
     sleep(1);
 }

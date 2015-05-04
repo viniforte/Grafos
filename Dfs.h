@@ -8,7 +8,7 @@
 #include <QColor>
 #include <QMainWindow>
 
-#include "graph.h"
+#include "Grafo.h"
 
 
 #define INF  100000
@@ -17,9 +17,9 @@ class Dfs : public QThread {
     Q_OBJECT
 
 public:
-    Dfs ( Graph *g, int index, QObject *parent=0 );
+    Dfs ( Grafo *grafo, int indice, QObject *parent=0 );
 
-    Graph *getGraph();
+    Grafo *getGrafo();
 
     ~Dfs () ;
 
@@ -27,15 +27,15 @@ protected:
     void run();
 
 signals:
-    void update ( Graph * );
+    void update ( Grafo * );
 
 private:
-    Graph *g;
+    Grafo *grafo;
     int tempo;
-    int index;
+    int indice;
     void metodoDFS ();
 
-    void visit (Vertex *);
+    void visit (Vertice *);
 
     //void createNewGraph ( int );
 };

@@ -8,13 +8,15 @@
 #include <QColor>
 #include <QMainWindow>
 
-#include "graph.h"
+#include "Grafo.h"
+
 #define INFINITO 1000000
+
 class Bfs : public QThread {
     Q_OBJECT
 
 public:
-    Bfs ( Graph *g,int vert, QObject *parent=0 );
+    Bfs ( Grafo *grafo, int verticeOrigem, QObject *parent=0 );
 
     ~Bfs () ;
 
@@ -22,10 +24,10 @@ protected:
     void run();
 
 signals:
-    void update ( Graph * );
+    void update ( Grafo * );
 
 private:
-    Graph *g;
+    Grafo *grafo;
     int verticeInicial;
     void metodoBFS ();
 

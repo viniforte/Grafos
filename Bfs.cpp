@@ -1,12 +1,12 @@
 #include "Bfs.h"
 
-Bfs::Bfs( Graph *g, int vert, QObject *parent) : QThread(parent) {
-    this->g = g;
-    this->verticeInicial = vert;
+Bfs::Bfs( Grafo *grafo, int verticeInicial, QObject *parent) : QThread(parent) {
+    this->grafo = grafo;
+    this->verticeInicial = verticeInicial;
 }
 
 Bfs::~Bfs () {
-    delete g;
+    delete grafo;
 }
 
 void Bfs::run () {
@@ -14,38 +14,41 @@ void Bfs::run () {
 }
 
 void Bfs:: metodoBFS() {
-    QList<Vertex *> lista;
-    Vertex *verticeAtual, *vertice;
-    Edge *aresta;
-    Vertex **V = g->getVertex();
-    int n = g->getVertexCount();
+    qDebug() << "Metodo BFS";
+    QList<Vertice *> lista;
+    Vertice *verticeAtual, *vertice;
+    Aresta *aresta;
+    Vertice **ListaVertices = grafo->getVertice();
+    int quantidade = grafo->getQuantidadeVertice();
     int i;
-    for ( i = 0; i < n; i++ ) {
-        V[i]->setFather(NULL);
-        V[i]->setColor(Qt::white);
-        V[i]->setD(INFINITO);
+    for ( i = 0; i < quantidade; i++ ) {
+        ListaVertices[i]->setPai(NULL);
+        ListaVertices[i]->setCor(Qt::white);
+        ListaVertices[i]->setPeso(INFINITO);
     }
-    V[this->verticeInicial]->setD(0);
-    V[this->verticeInicial]->setColor(Qt::gray);
-    emit update(g);
+    ListaVertices[this->verticeInicial]->setPeso(0);
+    ListaVertices[this->verticeInicial]->setCor(Qt::gray);
+    emit update(grafo);
     sleep(1);
 
-    lista.append(V[this->verticeInicial]);
+    lista.append(ListaVertices[this->verticeInicial]);
     while (!lista.empty()) {
         vertice = lista.takeFirst();
-        for ( aresta = vertice->getEdges(); aresta; aresta = aresta->getNext() ) {
-            verticeAtual = V[aresta->getIdAdj()];
-            if ( verticeAtual->getColor() == Qt::white ) {
-                verticeAtual->setColor(Qt::gray);
-                emit update(g);
+        for ( aresta = vertice->getArestas(); aresta; aresta = aresta->getProximo() ) {
+            verticeAtual = ListaVertices[aresta->getIndiceAdj()];
+            if ( verticeAtual->getCor() == Qt::white ) {
+                verticeAtual->setCor(Qt::gray);
+
+                emit update(grafo);
                 sleep(1);
-                verticeAtual->setFather(vertice);
-                verticeAtual->setD(vertice->getD() + 1 );
+
+                verticeAtual->setPai(vertice);
+                verticeAtual->setPeso(vertice->getPeso() + 1 );
                 lista.append(verticeAtual);
             }
         }
-        vertice->setColor(Qt::black);
-        emit update(g);
+        vertice->setCor(Qt::black);
+        emit update(grafo);
         sleep(1);
         qDebug() << "Emitiu sinal";
     }
